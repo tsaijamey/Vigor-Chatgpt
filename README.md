@@ -1,4 +1,4 @@
-# Vigor Chatgpt
+# Vigor ChatGPT
 简介：“ChatGPT小药丸”。让你的ChatGPT保持活力。  
 还在为你的chatgpt不刷新而烦恼吗？  
 给TA来一颗蓝色小药丸吧。你懂的  
