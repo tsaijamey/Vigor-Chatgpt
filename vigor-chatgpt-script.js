@@ -11,13 +11,55 @@
 
 // 匿名函数自执行，避免污染全局变量环境
 (function() {
+  // 查找父元素
+  let style = `
+  .badge {
+    width: auto
+    height: 20px;
+    padding: 12px;
+    margin: 5px 0px;
+    color: #F9F7F3;
+    border-radius: 4px;
+    background-color: #0FA3B1;
+    background-blend-mode: normal;
+    font-family: Viga;
+    font-size: 11px;
+    font-weight: 400;
+    
+    text-align: center;
+  }
+  .badge p {
+    line-height: 18px;
+  }
+  `
+  const parentElement = document.evaluate(
+    '//*[@id="__next"]/div[2]/div[1]/div/div/nav/a',
+    document,
+    null,
+    XPathResult.FIRST_ORDERED_NODE_TYPE,
+    null
+  ).singleNodeValue.parentElement;
+
+  // 创建要插入的DIV
+  const newDiv = document.createElement("div");
+  newDiv.className = 'badge'
+  newDiv.innerHTML = `<style>${style}</style><p>Vigor is running</p><p>Your ChatGPT will remain active.</p>`;
+
+  // 将新的DIV插入到父元素中
+  parentElement.insertBefore(newDiv, parentElement.firstChild);
+
   // 定义计时器，初始化为 null
   let refreshTimer = null;
 
   // 如果当前页面在 chat.openai.com 域名下，则执行以下操作
   if (location.hostname === "chat.openai.com") {
-    // 在控制台输出页面匹配信息和本地时间
-    console.log(`页面匹配，本地时间为：${new Date().toLocaleTimeString()}`);
+    // 创建要插入的 P 元素
+    const newP = document.createElement("p");
+    newP.textContent = `最近刷新时间：${new Date().toLocaleTimeString()}`;
+
+    // 将 P 元素添加到 DIV 元素中
+    newDiv.appendChild(newP);
+
     // 调用 checkVisibility 函数
     checkVisibility();
   }
