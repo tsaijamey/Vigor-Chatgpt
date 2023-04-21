@@ -10,6 +10,9 @@
 3. 选择新建脚本，把代码复制进去，保存
 4. 刷新一次ChatGPT页面即可
 
+# 预览
+![这是界面](https://github.com/tsaijamey/Vigor-Chatgpt/blob/main/screenshot.png "Preview Interface")
+
 # 说明
 闲时顺手做的。
 
