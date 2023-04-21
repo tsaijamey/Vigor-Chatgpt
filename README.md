@@ -1,5 +1,7 @@
 # Vigor Chatgpt
 简介：“ChatGPT小药丸”。让你的ChatGPT保持活力。  
+还在为你的chatgpt不刷新而烦恼吗？  
+给TA来一颗蓝色小药丸吧。你懂的  
 当且仅当你没有在ChatGPT页面上活动时，定时替你刷新ChatGPT的页面，间隔是30秒，如果你当前正在ChatGPT页面上，则不刷新。
 
 # 说明
