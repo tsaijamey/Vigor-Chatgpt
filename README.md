@@ -4,6 +4,9 @@
 给TA来一颗蓝色小药丸吧。你懂的  
 当且仅当你没有在ChatGPT页面上活动时，定时替你刷新ChatGPT的页面，间隔是30秒，如果你当前正在ChatGPT页面上，则不刷新。
 
+# Update
+- 2023.04.27 增加了插件加载的load事件监听。
+
 # 安装
 1. 先去Chrome商店安装一个Tamper Monkey。https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo
 2. 激活Tamper Monkey后让它显示在浏览器工具栏
