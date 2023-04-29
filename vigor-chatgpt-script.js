@@ -10,6 +10,8 @@
 // ==/UserScript==
 
 console.log(`脚本已运行`);
+let timeGap = 60000;
+console.log(`刷新间隔设置为 ：${timeGap}秒，如需修改请打开脚本修改变量 timeGap 的值`)
 // 匿名函数自执行，避免污染全局变量环境
 (function () {
   // 查找父元素
@@ -79,7 +81,7 @@ console.log(`脚本已运行`);
         console.log(`当前页面的可见状态不是 hidden`);
         setTimeout(checkVisibility, 1000);
       }
-    }, 10000);
+    }, timeGap);
 
     // 否则清除定时器，并在 1 秒后再次调用自身
 
