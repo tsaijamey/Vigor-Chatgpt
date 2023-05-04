@@ -6,18 +6,37 @@
 // @match        https://chat.openai.com/*
 // @grant        none
 // @author       yammi@yammi.cafe
-// @run-at       document-idle
+// @run-at       document-end
 // ==/UserScript==
 
 console.log(`脚本已运行`);
 // 匿名函数自执行，避免污染全局变量环境
 
+let refreshTimer = null;
 
 (function () {
 
-  window.onload = function() { 
-    // 页面加载完毕后执行的代码
-    console.log('页面已加载完成');
+  checkElementInterval = setInterval(() => {
+    const result = document.evaluate(
+      '/html/body/div[1]/div[2]/div[1]/div/div/nav/a',
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    );
+
+    if (result.singleNodeValue) {
+      console.log('页面已加载完成');
+      clearInterval(checkElementInterval);
+      executeScript();
+    } else {
+      console.log('仍在等待目标元素加载');
+    }
+  }, 1000);
+
+
+  function executeScript() {
+
     // 查找父元素
     let style = `
       .badge {
@@ -37,7 +56,6 @@ console.log(`脚本已运行`);
         line-height: 18px;
       }
     `
-    
     const result = document.evaluate(
       '/html/body/div[1]/div[2]/div[1]/div/div/nav/a',
       document,
@@ -45,8 +63,6 @@ console.log(`脚本已运行`);
       XPathResult.FIRST_ORDERED_NODE_TYPE,
       null
     );
-
-    let refreshTimer = null;
 
     if (result.singleNodeValue) {
       const parentElement = result.singleNodeValue.parentElement;
@@ -75,40 +91,37 @@ console.log(`脚本已运行`);
     } else {
       console.error('未找到节点');
     }
-  }
 
-    
-
-  // 检测网页可见性的函数
-  function checkVisibility() {
-    // 如果当前页面处于被隐藏状态，则启动定时器，每一分钟刷新一次页面并继续检测是否可见
-    refreshTimer = setTimeout(() => {
-      if (document.visibilityState === "hidden") {
-        // 获取当前页面源代码
-        const sourceCode = document.documentElement.innerHTML;
-        // 检查是否包含 "result-streaming" 字符串
-        if (sourceCode.includes("result-streaming")) {
+    // 检测网页可见性的函数
+    function checkVisibility() {
+      // 如果当前页面处于被隐藏状态，则启动定时器，每一分钟刷新一次页面并继续检测是否可见
+      refreshTimer = setTimeout(() => {
+        if (document.visibilityState === "hidden") {
+          // 获取当前页面源代码
+          const sourceCode = document.documentElement.innerHTML;
+          // 检查是否包含 "result-streaming" 字符串
+          if (sourceCode.includes("result-streaming")) {
             setTimeout(() => {
-                // 等待 3 秒后重新检查
-                checkVisibility();
-                console.log('检测到正在生成内容')
+              // 等待 3 秒后重新检查
+              checkVisibility();
+              console.log('检测到正在生成内容')
             }, 3000);
-        } else {
-          location.reload();
+          } else {
+            location.reload();
+          }
         }
-      }
-      else {
-        // clearInterval(refreshTimer);
-        console.log(`当前页面的可见状态不是 hidden`);
-        //找到 xpath 为 //*[@id="__next"]/div[2]/div[2]/main/div[2]/form/div/div[2]/textarea 的区域，把question值输入该区域
-        const textArea = document.evaluate(
+        else {
+          // clearInterval(refreshTimer);
+          console.log(`当前页面的可见状态不是 hidden`);
+          //找到 xpath 为 //*[@id="__next"]/div[2]/div[2]/main/div[2]/form/div/div[2]/textarea 的区域，把question值输入该区域
+          const textArea = document.evaluate(
             '//*[@id="__next"]/div[2]/div[2]/main/div[2]/form/div/div[2]/textarea',
             document,
             null,
             XPathResult.FIRST_ORDERED_NODE_TYPE,
             null
-        ).singleNodeValue;
-        if (textArea) {
+          ).singleNodeValue;
+          if (textArea) {
             let text = '';
             text = textArea.value;
             if (text) {
@@ -126,12 +139,13 @@ console.log(`脚本已运行`);
                 location.reload();
               }
             }
+          }
         }
-      }
-    }, 30000);
+      }, 30000);
 
-    // 否则清除定时器，并在 1 秒后再次调用自身
+      // 否则清除定时器，并在 1 秒后再次调用自身
 
+    }
   }
 
   // 当脚本停止或者页面卸载时清除计时器
