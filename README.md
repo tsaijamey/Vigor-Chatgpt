@@ -23,6 +23,8 @@
 4. 刷新一次ChatGPT页面即可
 
 # 预览
+![ChatGPT-Filtering](https://github.com/tsaijamey/Vigor-Chatgpt/assets/61675185/34f6660d-a2c4-41fa-a278-2e825fa655a5 "Preview Interface")
+
 ![这是界面](https://github.com/tsaijamey/Vigor-Chatgpt/blob/main/screenshot.png "Preview Interface")
 
 # 说明
